@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Enjoy</title>
+	<style type="text/css">
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 90% !important;
+}
+</style>
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<link href="css/signin.css" rel="stylesheet"></link>
+	 <link rel="shortcut icon" href="img/logo.png" type="image/png" />
+</h:head>
+<h:body>
+	<div class="container">
+		<h:form styleClass="form-horizontal">
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<div class="form-signin">
+			<p:inputText value="#{administrarActionS.person.name}" />
+			<p:inputText value="#{administrarActionS.person.direction}" />
+			<p:inputText value="#{administrarActionS.person.age}" />
+			
+			<p:inputTextarea value="#{administrarActionS.jsonText}" id="hi" cols="10"/>
+			
+			<p:commandButton action="#{administrarActionS.nombreOb}"
+				value="Thanks my God!!" update="hi"
+				styleClass="btn btn-lg btn-primary btn-block" />
+				
+			<p:commandButton action="#{administrarActionS.twitterTest}"
+				value="Testing twitter" update="tablaResultado"
+				styleClass="btn btn-lg btn-primary btn-block" />
+  
+		</div>
+	
+			<fieldset>
+    <legend>My twets!</legend>
+    
+      <p:dataTable id="tablaResultado" paginator="true" rows="10" value="#{administrarActionS.timeline}" var="item">
+      		<p:column sortBy="#{item.user.name}">
+                        <f:facet name="header">
+                            <h:outputText value="User name"/>
+                        </f:facet>
+                        <h:outputText value="#{item.user.screenName}" />
+            </p:column>
+            
+            <p:column sortBy="#{item.text}">
+                        <f:facet name="header">
+                            <h:outputText value="Twett"/>
+                        </f:facet>
+                        <h:outputText value="#{item.text}" />
+            </p:column>
+            
+            <p:column sortBy="#{item.createdAt}">
+                        <f:facet name="header">
+                            <h:outputText value="Geo location"/>
+                        </f:facet>
+                        <h:outputText value="#{item.createdAt}" >
+                        	<f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+            </p:column>
+            
+            
+      </p:dataTable>
+    	</fieldset>
+    	
+    	<fieldset>
+    
+     <legend>Buscar twetts</legend>
+     	<div class="form-group">
+     	<div class="col-lg-10">
+     	<p:inputText value="#{administrarActionS.search}" />
+     	</div>
+     	</div>
+			
+	 <p:commandButton action="#{administrarActionS.twitterSearch}"
+				value="Search twetts" update="tablaSearch"
+				styleClass="btn btn-primary btn-sm" />
+				
+      <p:dataTable id="tablaSearch" paginator="true" rows="10" value="#{administrarActionS.results}" var="item">
+      		<p:column sortBy="#{item.user.name}">
+                        <f:facet name="header">
+                            <h:outputText value="User name"/>
+                        </f:facet>
+                        <h:outputText value="#{item.user.screenName}" />
+            </p:column>
+            
+            <p:column sortBy="#{item.user.name}">
+                        <f:facet name="header">
+                            <h:outputText value="Image"/>
+                        </f:facet>
+                        
+                        <img  src="#{administrarActionS.getImage(item)}" alt="Profile foto" /> 
+            </p:column>
+            
+            <p:column sortBy="#{item.text}">
+                        <f:facet name="header">
+                            <h:outputText value="Twett"/>
+                        </f:facet>
+                        <h:outputText value="#{item.text}" />
+            </p:column>        
+            
+            
+            
+            <p:column sortBy="#{item.retweetCount}">
+                        <f:facet name="header">
+                            <h:outputText value="Retweet count"/>
+                        </f:facet>
+                        <h:outputText value="#{item.retweetCount}" />
+            </p:column>
+            
+            <p:column sortBy="#{item.geoLocation}">
+                        <f:facet name="header">
+                            <h:outputText value="Geo location"/>
+                        </f:facet>
+                        <h:outputText value="#{item.geoLocation}" />
+                        
+            </p:column>
+            
+            <p:column sortBy="#{item.createdAt}">
+                        <f:facet name="header">
+                            <h:outputText value="Created at"/>
+                        </f:facet>
+                        <h:outputText value="#{item.createdAt}" >
+                        	<f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+            </p:column>    
+            
+      </p:dataTable>
+      
+    </fieldset>
+    
+    	</h:form>
+ <p:gmap  center="41.381542, 2.122893" zoom="15" type="HYBRID"   
+    style="width:600px;height:400px"   
+    streetView="true"/> 
+	</div>
+	    	
+</h:body>
+
+</html>
